@@ -12,4 +12,4 @@ npm run render
 
 Node.js 22+ and FFmpeg are required. HyperFrames is pinned to 0.8.78. The extension itself has no dependency on HyperFrames or GSAP.
 
-The checked composition has zero lint, runtime, layout and motion findings; all 157 sampled text checks pass WCAG AA. The published GIF is a 1000 px-wide, 15 fps export of the same timeline.
+The checked composition has zero lint, runtime, layout and motion findings; all 157 sampled text checks pass WCAG AA. The published GIF is a 1000 px-wide, 15 fps export of seconds 1.3–12.3 from the same timeline, so its static first frame already shows the product.
