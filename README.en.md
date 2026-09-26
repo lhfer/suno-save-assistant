@@ -48,3 +48,7 @@ npm run package
 ```
 
 Tests require Node.js 20+. Packaging needs Python 3. See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## License
+
+[MIT](LICENSE).

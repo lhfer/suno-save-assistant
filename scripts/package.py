@@ -20,6 +20,12 @@ with zipfile.ZipFile(archive, 'w', zipfile.ZIP_DEFLATED) as z:
         info.compress_type = zipfile.ZIP_DEFLATED
         info.external_attr = 0o100644 << 16
         z.writestr(info, path.read_bytes())
+    license_file = root / 'LICENSE'
+    if license_file.exists():
+        info = zipfile.ZipInfo('suno-save-assistant/LICENSE', (2026, 9, 26, 0, 0, 0))
+        info.compress_type = zipfile.ZIP_DEFLATED
+        info.external_attr = 0o100644 << 16
+        z.writestr(info, license_file.read_bytes())
 digest = hashlib.sha256(archive.read_bytes()).hexdigest()
 (output / 'SHA256SUMS').write_text(f'{digest}  {archive.name}\n')
 print(f'{archive.name}: {digest}')

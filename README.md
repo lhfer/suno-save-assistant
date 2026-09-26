@@ -6,6 +6,7 @@
   <a href="https://github.com/lhfer/suno-save-assistant/releases/latest"><img alt="Release" src="https://img.shields.io/github/v/release/lhfer/suno-save-assistant?color=c95732&label=release"></a>
   <a href="https://github.com/lhfer/suno-save-assistant/actions/workflows/ci.yml"><img alt="Tests" src="https://github.com/lhfer/suno-save-assistant/actions/workflows/ci.yml/badge.svg"></a>
   <img alt="Chrome 120+" src="https://img.shields.io/badge/Chrome-120%2B-726357">
+  <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-4f7a60"></a>
 </p>
 
 <p align="center">
@@ -91,3 +92,7 @@ npm run package  # Python 3，生成 dist/ 下的 ZIP 与 SHA256SUMS
 ```
 
 `extension/` 是扩展源码，`docs/` 是静态演示站，`media/` 是动图源文件。欢迎提交可复现的问题或改进，见 [贡献指南](CONTRIBUTING.md)。
+
+## 许可证
+
+采用 [MIT License](LICENSE)。
