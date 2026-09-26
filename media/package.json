@@ -1,0 +1,9 @@
+{
+  "name": "suno-save-assistant-motion",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "npx --yes hyperframes@0.8.78 check",
+    "render": "npx --yes hyperframes@0.8.78 render --fps 30 --quality high --output renders/save-flow.mp4"
+  }
+}

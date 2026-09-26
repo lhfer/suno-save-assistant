@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Suno 保存助手 — 点一次保存，剩下的交给后台</title>
+  <meta name="description" content="保存自己的 Suno 歌曲。静音后台处理，完整性检查，自动下载。独立 Chrome 扩展。">
+  <meta property="og:title" content="Suno 保存助手">
+  <meta property="og:description" content="点一次保存，剩下的交给后台。">
+  <meta property="og:image" content="https://lhfer.github.io/suno-save-assistant/assets/hero.png">
+  <meta name="theme-color" content="#f7f5f1">
+  <link rel="icon" href="assets/icon.png">
+  <link rel="stylesheet" href="site.css">
+  <script src="site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">跳到正文</a>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Suno 保存助手首页"><img src="assets/icon.png" width="32" height="32" alt=""><span>Suno Save Assistant</span></a>
+    <nav aria-label="主导航"><a href="#install">安装</a><a href="https://github.com/lhfer/suno-save-assistant">GitHub <span aria-hidden="true">↗</span></a></nav>
+  </header>
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow">CHROME EXTENSION <span>v0.3.0</span></p>
+          <h1><span class="serif">Suno</span><span>保存助手<span class="accent">。</span></span></h1>
+          <p class="lead">点一次保存，<br>剩下的交给后台。</p>
+          <p class="intro">把自己的歌留在本地。静音处理，检查完整，自动保存。</p>
+          <div class="hero-actions"><a class="button primary" href="https://github.com/lhfer/suno-save-assistant/releases/latest">下载 Chrome 扩展 <span aria-hidden="true">↓</span></a><button class="text-action" id="hero-demo">试一首演示歌曲 <span aria-hidden="true">→</span></button></div>
+          <p class="quiet-note">本机处理 · 无需额外账号</p>
+        </div>
+        <div class="demo-area" id="demo">
+          <div class="demo-heading"><span><i class="live-dot" aria-hidden="true"></i>可交互演示</span><span>虚构数据 · 不连接 Suno</span></div>
+          <div class="browser-shell">
+            <div class="browser-bar"><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>我的音乐工作区</span><span class="small-wave" aria-hidden="true">▂ ▅ ▃ ▆ ▂</span></div>
+            <div class="demo-workspace">
+              <div class="library" aria-hidden="true">
+                <p class="library-label">MY SONGS</p><p class="library-title">最近的创作</p>
+                <div class="fake-song"><span class="cover one">≈</span><span>云端回声<small>3:28 · 演示</small></span></div>
+                <div class="fake-song"><span class="cover two">∿</span><span>午后的留白<small>2:51 · 演示</small></span></div>
+                <div class="fake-song"><span class="cover three">⌁</span><span>沿着海岸线<small>3:42 · 演示</small></span></div>
+                <div class="ambient-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                <p class="library-bottom">创作继续，保存也继续。</p>
+              </div>
+              <section class="saver" aria-label="保存助手交互演示">
+                <div class="saver-header"><img src="assets/icon.png" alt="" width="34" height="34"><div><h2>歌曲保存助手</h2><p>SUNO · 后台保存</p></div><span>0.3.0</span></div>
+                <div class="recovery" id="recovery" hidden><strong>上次有 1 首未完成</strong><p>继续后会从头重新保存。</p><button id="resume">继续保存 1 首</button></div>
+                <p class="current-label">当前歌曲</p><h3>云端回声</h3><p class="hint">静音后台处理，完整后自动保存。</p>
+                <button class="save-button" id="save-song">保存这首歌</button>
+                <form id="link-form"><label for="demo-url">或者粘贴歌曲链接</label><div class="input-row"><input id="demo-url" type="text" placeholder="试试示例链接" autocomplete="off" spellcheck="false"><button type="submit">保存</button></div></form>
+                <div class="task-heading"><strong>保存任务</strong><span id="task-count">等待开始</span></div>
+                <div class="task" id="task" hidden><div class="task-title"><b>云端回声</b><span id="phase">准备中</span></div><p id="task-note">正在准备后台歌曲页</p><div class="progress" id="progress" role="progressbar" aria-label="模拟保存进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="progress-fill"></div></div><button class="task-link" id="cancel">取消任务</button></div>
+                <div class="empty-task" id="empty-task">选好歌曲，点一次保存即可。</div>
+                <p id="demo-status" role="status" aria-live="polite">这是流程演示，不会下载真实音频。</p>
+              </section>
+            </div>
+          </div>
+          <div class="demo-controls"><button id="try-recovery">体验任务恢复</button><button id="try-duplicate">体验重复提交</button><button id="reset-demo">重置演示</button></div>
+          <ol class="flow" aria-label="保存流程"><li data-step="0"><span>01</span>粘贴链接</li><li data-step="1"><span>02</span>后台处理</li><li data-step="2"><span>03</span>检查完整</li><li data-step="3"><span>04</span>自动保存</li></ol>
+        </div>
+      </div>
+    </section>
+    <section class="proof section" aria-labelledby="proof-title">
+      <div class="section-intro"><p class="eyebrow">CHECKED, THEN SAVED.</p><h2 id="proof-title">完整保存，<br>才算完成。</h2><p>不仅看进度到 100%，还要确认文件真的落盘、音频能够完整解码。</p><a class="inline-link" href="https://github.com/lhfer/suno-save-assistant/blob/main/docs/VALIDATION.md">查看验收记录 ↗</a></div>
+      <div class="proof-details"><div class="proof-number"><strong>71<span>项</span></strong><p>自动化回归测试<br><small>队列、恢复、去重、取消、完整性</small></p></div><div class="proof-number"><strong>4<span>/ 4</span></strong><p>真实音频完整解码通过<br><small>单首、恢复队列、分享短链</small></p></div><p class="measurement">本次实测 4 首约 3 分钟歌曲，用时 15–26 秒。耗时随歌曲、网络和页面状态变化。</p></div>
+    </section>
+    <section class="install section" id="install" aria-labelledby="install-title"><div class="section-intro"><p class="eyebrow">THREE SMALL STEPS.</p><h2 id="install-title">让它住进<br>你的 Chrome。</h2><p>解压即用。安装文件夹请长期保留，别随临时下载一起清理。</p></div><ol class="install-steps"><li><span>01</span><div><h3>下载并解压</h3><p>从 Release 获取扩展 ZIP，放到长期保留的目录。</p><a href="https://github.com/lhfer/suno-save-assistant/releases/latest">获取最新版本 ↗</a></div></li><li><span>02</span><div><h3>加载到 Chrome</h3><p>打开 <code>chrome://extensions</code>，启用开发者模式，加载包含 manifest.json 的文件夹。</p></div></li><li><span>03</span><div><h3>选一首自己的歌</h3><p>刷新 Suno，点歌曲旁「保存」，或者把链接粘贴到插件。</p></div></li></ol></section>
+    <section class="faq section" aria-labelledby="faq-title"><h2 id="faq-title">几个你可能想知道的细节。</h2><div><details><summary>会使用官方导出额度吗？</summary><p>插件读取网页正常播放的音频缓冲区，不调用官方导出、下载计费或 WAV 生成接口。适用于你拥有或有权保存且在网页上可正常播放的歌曲。</p></details><details><summary>为什么会短暂切换标签页？</summary><p>Chrome 需要让新任务页先初始化音频。插件会短暂显示静音任务页，随后自动返回；你主动切走时，它不会抢回焦点。</p></details><details><summary>保存的文件是什么格式？</summary><p>M4A 容器中的 Opus 音频，位于默认下载目录的 Suno 文件夹。插件不做音质提升或 MP3 转码。</p></details><details><summary>中断后能接着保存吗？</summary><p>任务记录会保留，重开 Chrome 后可以继续。未完成的音频会从头采集；已完整保存的文件先检查是否可复用。</p></details></div></section>
+  </main>
+  <footer><a class="brand" href="#top"><img src="assets/icon.png" width="28" height="28" alt=""><span>Suno Save Assistant</span></a><p>独立项目，与 Suno 官方无关联。</p><a href="https://github.com/lhfer/suno-save-assistant">在 GitHub 上一起改进 ↗</a></footer>
+</body>
+</html>

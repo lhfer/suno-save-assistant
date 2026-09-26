@@ -1,0 +1,60 @@
+{
+  "manifest_version": 3,
+  "name": "Suno 歌曲保存助手",
+  "version": "0.3.0",
+  "description": "一键保存自己的 Suno 歌曲，任务可恢复、自动去重、完整性校验并自动保存。",
+  "minimum_chrome_version": "120",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "downloads",
+    "alarms",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "https://suno.com/*"
+  ],
+  "background": {
+    "service_worker": "worker.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Suno 歌曲保存助手",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png"
+    }
+  },
+  "icons": {
+    "16": "icons/16.png",
+    "32": "icons/32.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://suno.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "commands": {
+    "save-current": {
+      "suggested_key": {
+        "default": "Alt+Shift+S",
+        "mac": "Alt+Shift+S"
+      },
+      "description": "保存当前 Suno 歌曲"
+    }
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmumIchXJ2rWrsD/7zGES3vQL/54GmkITSX6/qvW48R+a3G+2twEwhFVN2CYcoQE1p5DfTaPMHb9VdBZSLFJpWdk4rtgD5u7m3NPj4u/UKKT61y7qm19ekUHAqXf1MYElYhT3A1FS56AcwRj1WTl6qQcaEo22RdgGzCoZ2/ia9RVQEFhEndGHwFYh/EGFOV46oTGffoKuA35R/XXizOmtVo5VkuAKqKc0M7k4Qpz6UY9omTBtfl1qeGp/XrPautVrH8qfrGve+nEtnk0U1GqKOVhnthPT9SDkbmCbR34RsfC6rsQrhb/F0ILzQR34KN6fYOaJXAbcK5732eRaeYWg2QIDAQAB"
+}

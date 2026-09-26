@@ -1,0 +1,20 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import '../extension/integrity.js';
+const fixture = fs.readFileSync(new URL('./fixtures/complete.m4a', import.meta.url));
+function boxes(data, start=0, end=data.length) { const result=[]; for(let p=start;p<end;){const size=data.readUInt32BE(p);result.push({type:data.toString('ascii',p+4,p+8),start:p,end:p+size});p+=size;}return result; }
+const top=boxes(fixture), moofs=top.filter(b=>b.type==='moof');
+test('合成基准文件通过连续性和完整时长校验',()=>{const v=SunoIntegrity.validateMp4(fixture,213.2);assert.equal(v.fragments,107);assert.equal(v.samples,10661);assert.equal(v.duration,213.2065);});
+test('删除中间完整片段时拒绝保存',()=>{const b=moofs[25],m=top[top.indexOf(b)+1];assert.throws(()=>SunoIntegrity.validateMp4(Buffer.concat([fixture.subarray(0,b.start),fixture.subarray(m.end)]),213.2),/重复|缺失|缺少/);});
+test('重复中间完整片段时拒绝保存',()=>{const b=moofs[25],m=top[top.indexOf(b)+1];assert.throws(()=>SunoIntegrity.validateMp4(Buffer.concat([fixture.subarray(0,m.end),fixture.subarray(b.start)]),213.2),/重复|缺失/);});
+test('缺失结尾片段时，即使容器结构完整也拒绝',()=>{assert.throws(()=>SunoIntegrity.validateMp4(fixture.subarray(0,moofs.at(-1).start),213.2),/时长/);});
+test('文件被截断时拒绝保存',()=>{assert.throws(()=>SunoIntegrity.validateMp4(fixture.subarray(0,-111),213.2),/截断|不完整/);});
+test('重复初始化头时拒绝保存',()=>{assert.throws(()=>SunoIntegrity.validateMp4(Buffer.concat([fixture.subarray(0,694),fixture]),213.2),/重复文件头/);});
+test('片段序号未变但时间戳有空洞时拒绝',()=>{const data=Buffer.from(fixture),m=moofs[5];const traf=boxes(data,m.start+8,m.end).find(b=>b.type==='traf');const tfdt=boxes(data,traf.start+8,traf.end).find(b=>b.type==='tfdt');data.writeUInt32BE(data.readUInt32BE(tfdt.start+12)+960,tfdt.start+12);assert.throws(()=>SunoIntegrity.validateMp4(data,213.2),/时间线缺少/);});
+test('mdat 字节数量错误时拒绝',()=>{const data=Buffer.from(fixture),m=moofs[5],traf=boxes(data,m.start+8,m.end).find(b=>b.type==='traf'),trun=boxes(data,traf.start+8,traf.end).find(b=>b.type==='trun');data.writeUInt32BE(data.readUInt32BE(trun.start+24)+1,trun.start+24);assert.throws(()=>SunoIntegrity.validateMp4(data,213.2),/采样数据|字节数量/);});
+test('未知歌曲完整时长不能产生成功结果',()=>assert.throws(()=>SunoIntegrity.validateMp4(fixture,NaN),/完整时长/));
+test('加密数据伪装成音频时拒绝',()=>assert.throws(()=>SunoIntegrity.validateMp4(new Uint8Array(2000).fill(31),213.2)));
+test('只清理字节完全一致的重复初始化头，保留全部媒体字节',()=>{const duplicated=Buffer.concat([fixture.subarray(0,694),fixture]);const clean=SunoIntegrity.normalizeMp4(duplicated);assert.equal(clean.removedInitBoxes,2);assert.deepEqual(Buffer.from(clean.data),fixture);assert.equal(SunoIntegrity.validateMp4(clean.data,213.2).valid,true);});
+test('不同初始化头不能被当作重复删除',()=>{const init=Buffer.from(fixture.subarray(0,694));init[60]^=1;assert.throws(()=>SunoIntegrity.normalizeMp4(Buffer.concat([init,fixture])),/不同的音轨/);});
+test('清理初始化头不掩盖媒体片段重复',()=>{const b=moofs[25],m=top[top.indexOf(b)+1];const data=Buffer.concat([fixture.subarray(0,m.end),fixture.subarray(b.start)]);assert.throws(()=>SunoIntegrity.validateMp4(SunoIntegrity.normalizeMp4(data).data,213.2),/重复|缺失/);});

@@ -1,0 +1,22 @@
+name: 保存问题 / Bug report
+description: 报告可复现的保存或界面问题。
+body:
+  - type: input
+    id: version
+    attributes:
+      label: 插件版本和 Chrome 版本
+      placeholder: 0.3.0 / Chrome 140
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤、预期结果与实际结果
+      description: 请说明卡在哪一步，歌曲是否能在 Suno 正常播放。
+    validations:
+      required: true
+  - type: textarea
+    id: error
+    attributes:
+      label: 错误提示或脱敏截图
+      description: 不要附登录令牌、私人歌曲链接或个人任务备份。

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=1440,height=940">
+<title>Suno Save Assistant — save flow</title>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<style>
+@font-face{font-family:"Georgia";src:local("Georgia");font-weight:400;font-style:normal;}
+@font-face{font-family:"PingFang SC";src:local("PingFang SC");font-weight:400;font-style:normal;}
+*{box-sizing:border-box;margin:0}html,body{width:1440px;height:940px;overflow:hidden;background:#f7f5f1;color:#302b27;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif}#main{width:1440px;height:940px}.scene-content{position:relative;z-index:1;width:100%;height:100%;padding:54px 66px;display:flex;flex-direction:column;gap:28px}.header{height:42px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ddd4c8;padding-bottom:20px}.brand{display:flex;gap:13px;align-items:center;font-size:21px;font-weight:650;letter-spacing:-.4px}.brand-logo{width:34px;height:34px;border-radius:9px;background:url(assets/icon.png) center/cover}.demo-label{font-size:16px;color:#726357;letter-spacing:.04em}.stage{flex:1;min-height:0;display:grid;grid-template-columns:.85fr 1.15fr;gap:60px;align-items:center}.copy{min-width:0}.eyebrow{font-size:17px;letter-spacing:.12em;color:#9b4c30;margin-bottom:20px}.copy h1{display:flex;flex-direction:column;font-size:69px;font-weight:720;line-height:1.18;letter-spacing:-3px}.copy h1 span:first-child{font-family:Georgia,serif;font-size:108px;font-weight:400;letter-spacing:-6px;line-height:1.03}.copy h1 em{font-style:normal;color:#c95732}.copy p{max-width:365px;font-size:26px;color:#726357;line-height:1.65;margin-top:26px}.small-rule{width:58px;height:3px;background:#c95732;margin-top:29px}.aside-notes{display:grid;margin-top:24px}.aside-note{grid-area:1/1;font-size:23px;line-height:1.7;color:#302b27}.aside-note small{display:block;font-size:18px;color:#726357}.paper{background:#fffdfa;border:1px solid #d5c9ba;border-radius:16px;overflow:hidden;box-shadow:0 21px 36px #4b322415}.windowbar{height:38px;background:#eae2d7;border-bottom:1px solid #dbcfbf;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-size:17px;color:#726357}.dots{display:flex;gap:7px}.dots i{width:9px;height:9px;border-radius:50%;background:#b9a68f}.dots i:first-child{background:#c7795b}.mini-wave{color:#9b4329;font-size:20px;letter-spacing:2px}.app{padding:22px 32px;background:#f7f5f1}.app-head{display:flex;gap:13px;align-items:center}.app-head img{width:44px;height:44px;border-radius:11px}.app-head h2{font-size:25px;letter-spacing:-.6px;line-height:1.3}.app-head p{font-size:13px;letter-spacing:.09em;color:#726357;margin-top:4px}.version{margin-left:auto;align-self:flex-start;color:#726357;font-size:16px}.input-label{font-size:16px;margin:16px 0 8px;color:#65584e}.link-input{display:flex;align-items:center;justify-content:space-between;border:1px solid #d5c9ba;background:#fffdfa;height:48px;padding:0 15px;border-radius:8px;font-size:20px;color:#65584e}.link-input .typing{position:relative}.caret{height:24px;width:2px;background:#c95732;display:inline-block;vertical-align:middle;margin-left:4px}.link-mark{color:#c95732;font-size:25px}.save-btn{background:#b54a2a;color:#fffdfa;border-radius:8px;min-height:48px;display:flex;align-items:center;justify-content:center;margin-top:10px;font-size:20px;font-weight:700}.tasks-head{display:flex;justify-content:space-between;align-items:center;margin-top:18px;padding-bottom:10px;border-bottom:1px solid #ddd4c8;font-size:18px}.tasks-head span{font-size:15px;color:#726357}.task{margin-top:12px}.task-title{display:flex;align-items:center;justify-content:space-between;gap:18px}.task-title h3{font-size:23px;font-weight:650}.statuses{display:grid;text-align:right}.status{grid-area:1/1;color:#b14f2e;font-size:17px}.status.done{color:#41664d}.task-notes{display:grid;margin-top:8px;min-height:31px}.task-note{grid-area:1/1;font-size:17px;color:#726357;line-height:1.7}.track{height:6px;border-radius:6px;background:#e7ddcf;margin:12px 0 7px;overflow:hidden}.fill{height:100%;width:100%;background:#c95732;transform-origin:left}.receipt{opacity:0;display:flex;align-items:center;gap:14px;margin-top:12px;border-top:1px solid #ddd4c8;padding-top:12px;min-height:61px}.file-icon{width:41px;height:48px;border:1.5px solid #4f7a60;border-radius:6px;color:#4f7a60;display:flex;align-items:center;justify-content:center;font-size:24px}.receipt strong{font-size:20px;display:block}.receipt small{font-size:15px;color:#726357;display:block;margin-top:4px}.receipt .check{margin-left:auto;width:27px;height:27px;display:grid;place-items:center;background:#4f7a60;border-radius:50%;font-size:19px;color:#f7f5f1}.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;height:79px;margin-top:3px}.step{border-top:1px solid #d9cec0;padding-top:16px;display:flex;align-items:baseline;gap:15px;color:#726357}.step .number{font:30px Georgia}.step span:last-child{font-size:20px}.footer{display:flex;justify-content:space-between;font-size:15px;color:#726357}.ring{position:absolute;right:72px;top:80px;width:590px;height:590px;border:1px solid #eee6db;border-radius:50%;z-index:0}.states{position:relative}.cursor{position:absolute;left:65%;top:51%;width:34px;height:42px;z-index:10;filter:drop-shadow(0 3px 3px #302b2740)}.cursor path{fill:#302b27;stroke:#fffdfa;stroke-width:2}#main{position:relative;isolation:isolate}.wave-background{position:absolute;left:75px;bottom:152px;display:flex;align-items:center;gap:8px;height:44px;opacity:.13;z-index:0}.wave-background i{width:5px;height:24px;background:#c95732;border-radius:5px;transform-origin:center}.wave-background i:nth-child(2n){height:42px}.wave-background i:nth-child(3n){height:15px}
+.aside-note,.status,.task-note{opacity:0}.aside1,.status1,.note1{opacity:1}
+</style>
+</head>
+<body><div id="main" data-composition-id="main" data-start="0" data-duration="12.8" data-width="1440" data-height="940">
+<div class="ring" data-layout-ignore></div><div class="wave-background" data-layout-ignore><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<div class="scene-content">
+<header class="header"><div class="brand"><span class="brand-logo" aria-hidden="true"></span>Suno Save Assistant</div><span class="demo-label">交互流程示意 · 虚构数据与压缩时间</span></header>
+<div class="stage">
+<div class="copy"><div class="eyebrow">FROM LINK TO LOCAL.</div><h1><span>Suno</span><span>保存助手<em>。</em></span></h1><p>点一次保存，剩下的交给后台。</p><div class="small-rule"></div><div class="aside-notes"><div class="aside-note aside1">粘贴一条歌曲链接。<small>也可以直接点歌曲旁的保存按钮。</small></div><div class="aside-note aside2">你继续忙，它继续保存。<small>短暂静音初始化后，自动回到后台。</small></div><div class="aside-note aside3">完整，才值得留下。<small>核对片段、时长和文件大小。</small></div><div class="aside-note aside4">你的音乐，留在本地。<small>确认文件落盘，再告诉你「已保存」。</small></div></div></div>
+<div class="paper states"><div class="windowbar"><span class="dots"><i></i><i></i><i></i></span><span>歌曲保存助手</span><span class="mini-wave">▂ ▆ ▃ ▅ ▂</span></div><div class="app"><div class="app-head"><img src="assets/icon.png" alt=""><div><h2>歌曲保存助手</h2><p>SUNO · 后台保存</p></div><span class="version">0.3.0</span></div><p class="input-label">粘贴歌曲链接</p><div class="link-input"><span class="typing">suno.com/song/demo<span class="caret"></span></span><span class="link-mark">↗</span></div><div class="save-btn">自动加入保存队列</div><div class="tasks-head"><b>保存任务</b><span>演示歌曲</span></div><div class="task"><div class="task-title"><h3>云端回声</h3><div class="statuses"><span class="status status1">准备中</span><span class="status status2">正在保存</span><span class="status status3">检查完整性</span><span class="status status4 done">已保存</span></div></div><div class="task-notes"><p class="task-note note1">正在准备静音任务页</p><p class="task-note note2">已返回原页面 · 后台处理</p><p class="task-note note3">片段顺序 ✓　完整时长 ✓</p><p class="task-note note4">3:28 · 3.4 MB · M4A · 演示</p></div><div class="track"><div class="fill"></div></div><div class="receipt"><span class="file-icon">♫</span><div><strong>云端回声-demo.m4a</strong><small>默认下载目录 / Suno</small></div><span class="check">✓</span></div></div></div><svg class="cursor" viewBox="0 0 32 42" data-layout-ignore><path d="M4 2L5 31L13 25L20 39L25 36L18 23L29 21Z"/></svg></div>
+</div>
+<div class="steps"><div class="step step1"><span class="number">01</span><span>粘贴链接</span></div><div class="step step2"><span class="number">02</span><span>后台处理</span></div><div class="step step3"><span class="number">03</span><span>检查完整</span></div><div class="step step4"><span class="number">04</span><span>自动保存</span></div></div>
+<div class="footer"><span>CHROME EXTENSION · v0.3.0</span><span>动画为流程示意，不代表实际下载用时。</span></div>
+</div></div>
+<script>
+window.__timelines = window.__timelines || {};
+const tl=gsap.timeline({paused:true});
+tl.from('.brand',{y:-8,opacity:0,duration:.5,ease:'power2.out'},.12);
+tl.from('.demo-label',{opacity:0,duration:.45,ease:'sine.out'},.25);
+tl.from('.copy h1',{x:-24,opacity:0,duration:.75,ease:'expo.out'},.2);
+tl.from('.eyebrow',{y:10,opacity:0,duration:.55,ease:'power3.out'},.35);
+tl.from('.copy>p',{y:15,opacity:0,duration:.6,ease:'sine.out'},.5);
+tl.from('.small-rule',{scaleX:0,transformOrigin:'left',duration:.65,ease:'power4.out'},.65);
+tl.from('.aside-notes',{y:10,opacity:0,duration:.5,ease:'power2.out'},.78);
+tl.from('.paper',{y:32,scale:.98,opacity:0,duration:.75,ease:'expo.out'},.45);
+tl.from('.steps .step',{y:10,opacity:0,stagger:.08,duration:.5,ease:'power3.out'},.75);
+tl.from('.footer',{opacity:0,duration:.45,ease:'sine.out'},1);
+tl.from('.typing',{clipPath:'inset(0 100% 0 0)',duration:.7,ease:'none'},1.5);
+tl.fromTo('.caret',{opacity:0},{opacity:1,duration:.3,repeat:3,yoyo:true,ease:'none'},1.5);
+tl.fromTo('.cursor',{x:60,y:55,opacity:0},{x:0,y:0,opacity:1,duration:.6,ease:'power2.out'},1.8);
+tl.to('.save-btn',{scale:.975,backgroundColor:'#ad4223',duration:.12,ease:'power2.inOut'},2.45);
+tl.to('.save-btn',{scale:1,backgroundColor:'#b54a2a',duration:.22,ease:'back.out(1.1)'},2.61);
+tl.to('.cursor',{opacity:0,duration:.22,ease:'sine.in'},2.9);
+tl.from('.task',{y:9,opacity:0,duration:.5,ease:'power3.out'},2.75);
+tl.from('.fill',{scaleX:0,duration:4.9,ease:'sine.inOut'},2.9);
+tl.set('.receipt',{opacity:1},9.05);
+tl.from('.receipt',{y:18,scale:.98,duration:.5,ease:'back.out(1.1)'},9.05);
+tl.to('.fill',{backgroundColor:'#4f7a60',duration:.3,ease:'sine.inOut'},9.05);
+for(const [index,time] of [[2,3.15],[3,7.85],[4,9.05]]){
+ tl.to(`.aside${index-1},.status${index-1},.note${index-1}`,{opacity:0,duration:.15,ease:'sine.in'},time);
+ tl.fromTo(`.aside${index},.status${index},.note${index}`,{opacity:0,y:6},{opacity:1,y:0,duration:.32,ease:'power2.out',immediateRender:false},time+.13);
+}
+for(const [index,time] of [[1,1.5],[2,3.15],[3,7.85],[4,9.05]])tl.to(`.step${index}`,{color:'#b14f2e',borderColor:'#c95732',duration:.3,ease:'sine.inOut'},time);
+tl.to('.mini-wave',{opacity:.45,repeat:7,yoyo:true,duration:.34,ease:'sine.inOut'},3.1);
+tl.to('.ring',{rotation:5,scale:1.02,duration:12.8,ease:'none'},0);
+tl.to('.wave-background i',{scaleY:.4,stagger:.07,duration:.6,repeat:6,yoyo:true,ease:'sine.inOut'},2.9);
+tl.to('.scene-content',{opacity:0,duration:.35,ease:'sine.in'},12.35);
+window.__timelines.main=tl;
+</script></body></html>

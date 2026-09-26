@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Suno 歌曲保存助手</title><link rel="stylesheet" href="popup.css"><script src="popup.js" type="module"></script></head>
+<body>
+  <header><img src="icons/48.png" width="35" height="35" alt=""><div><h1>歌曲保存助手</h1><p>SUNO · 后台保存</p></div><span class="version">0.3.0</span></header>
+  <main>
+    <section id="recovery-panel" class="recovery" aria-labelledby="recovery-title" hidden><h2 id="recovery-title">有未完成的歌曲</h2><p>继续后会从头重新保存，已完成的文件不会重复下载。</p><button id="resume-pending" type="button">继续保存</button></section>
+    <section class="current"><p class="eyebrow">当前歌曲</p><h2 id="song-title">正在读取…</h2><p id="song-hint" class="muted">在 Suno 歌曲旁，也可以直接点「保存」。</p><button id="save-current" class="primary" disabled>保存这首歌</button></section>
+    <form id="link-form"><label for="share-url">或者粘贴歌曲链接</label><div class="input-row"><input id="share-url" type="text" inputmode="url" autocomplete="off" spellcheck="false" placeholder="粘贴链接，自动开始"><button id="save-link" type="submit" aria-label="保存链接">保存</button></div></form>
+    <p id="feedback" role="status" aria-live="polite" hidden></p><p id="error" role="alert" hidden></p>
+    <section class="tasks" aria-labelledby="tasks-title"><div class="section-heading"><h3 id="tasks-title">保存任务</h3><span id="task-count"></span></div><div id="task-list"><p class="empty">还没有任务。选好歌曲，点一次保存即可。</p></div></section>
+  </main>
+  <footer>完成后自动保存到 Downloads / Suno。<br>关闭弹窗后继续处理；重开 Chrome 可继续未完成任务。<br><button id="backup-records" type="button">备份任务记录</button></footer>
+</body></html>

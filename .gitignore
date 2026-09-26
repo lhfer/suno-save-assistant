@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.hyperframes/
+renders/
+.DS_Store
+.env
+.env.*
+*.log
+*.mp3
+*.wav
+*.m4a
+!tests/fixtures/complete.m4a
+private/
+evidence/
